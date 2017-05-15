@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="en">
+
+      <title>G.Location</title>
+
+    <!-- css framework Bulma -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.css">
+    <!-- css google maps -->
+    <link rel="stylesheet" href="https://developers.google.com/maps/documentation/javascript/demos/demos.css">
+    <!-- css local -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- js file, has to be asyn to load html events-->
+    <script src="js/indexjs.js" async defer></script>
+    <!-- google maps key, has to be async to load map -->
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTGbXgc6ewhPUceRY9g-O83AJStyWoTVw&callback=initMap"
+        async defer></script> -->
+
+    <!-- favicon.ico image -->
+    <!-- <link rel="shortcut icon" type="image/ico" href="./imgs/favicon.ico" /> -->
+
+    <script src="http://localhost:3000/socket.io/socket.io.js" charset="utf-8"></script>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font: 13px Helvetica, Arial; }
+        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+        form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+        #messages { list-style-type: none; margin: 0; padding: 0; }
+        #messages li { padding: 5px 10px; }
+        #messages li:nth-child(odd) { background: #eee; }
+      </style>
+  </head>
+  <body>
+
+    <main class="content">
+      <h2>Geo Location</h2>
+      <p>
+        Click Show Me button to get your coordinates.
+      </p>
+
+      <button id ='ownLocation' class="button is-primary">Show Me</button>
+       <br> <br>
+
+       <button id="showList" class="button is-primary">Ajax</button>
+
+       <!-- <button onclick="inputValue()">value</button> -->
+
+       <form id="onClickForm" action="">
+         <ul id="messages"></ul>
+         <input id="msgInputValue" type="text">
+         <button type="button" onclick="onClickFormValue()">Send</button>
+       </form>
+
+       <br><br>
+       <!-- <div>
+         <ul id="messages"></ul>
+         <form action="">
+           <input id="m" autocomplete="off" /><button>Send</button>
+         </form>
+       </div> -->
+      <!-- <section id="map" class="container"></section> -->
+
+    </main>
+
+  </body>
+
+
+  <script>
+
+    const socket = io('http://localhost:3000');
+    console.log("SOCKET ::; ", socket );
+
+    // $('form').submit(function(){
+    //    var mensagem = $('#m').val();
+    //    socket.emit('chat message', mensagem);
+    //    $('#m').val('');
+    //    return false;
+    //  });
+
+    const onClickFormValue = () => {
+      document.getElementById('onClickForm').submit();
+        const msg = document.getElementById('msgInputValue').value;
+        console.log(msg);
+        socket.emit('chat message', msg);
+        console.log(msg);
+        msg.val('')
+        console.log(msg);
+        return false;
+      // }
+    }
+    // socket.emit('ferret', 'tobi', function (data) {
+    //   console.log(data); // data will be 'woot'
+    // });
+    // socket.on('woot', function (name, fn) {
+    //    fn('ferret');
+    //  });
+    const inputValue = () => {
+      const msg = document.getElementById('msgInputValue').value;
+      // const msg = 'Vindo do FRONT'
+      console.log('INPUTVALUE msg; ', msg)
+      socket.emit('message', msg)
+      // socket.on('message', function(msg){
+      //   console.log('message: ', msg);
+      //   socket.emit('message', msg);
+      //
+      // });
+
+      // return msg;
+    };
+
+    socket.on('connect', function(data){
+      console.log('data ::; ', data);
+    });
+    socket.on('message', function(msg){
+      console.log('message: ', msg);
+    });
+    socket.on('event', function(evt){
+      console.log('event', evt);
+    });
+
+    socket.on('disconnect', function(){
+      console.log('disconnect');
+    });
+    // console.log('' socket.on);
+  </script>
+
+
+
+
+</html>
