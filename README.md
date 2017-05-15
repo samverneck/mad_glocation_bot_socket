@@ -2,11 +2,11 @@
 mad_glocation_bot_socket
 
 ```
-Na pasta <b>M.A.D</b> dê um npm install
+Na pasta M.A.D dê um npm install
 ```
 
 ```
-na pasta <b>glocation</b> rode um servidor local. recomendamos o live-server
+na pasta glocation rode um servidor local. recomendamos o live-server
 ```
 ```
 OBS: Usamos o mongoDB, então rode em um termianl o mongod na pasta do projeto todo.
